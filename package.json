@@ -16,5 +16,12 @@
         "tailwindcss": "^3.2.1",
         "vite": "^4.0.0",
         "vue": "^3.2.41"
+    },
+    "dependencies": {
+        "@tiptap/pm": "^2.0.4",
+        "@tiptap/starter-kit": "^2.0.4",
+        "@tiptap/vue-3": "^2.0.4",
+        "mavon-editor": "^2.10.4",
+        "vue3-quill": "^0.3.0"
     }
 }
