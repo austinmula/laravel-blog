@@ -21,3 +21,12 @@ export default {
     },
 };
 </script>
+
+π<style>
+.ProseMirror{
+    background-color: aqua;
+    min-height: 100vh;
+    width:'200px';
+    margin: 0 auto;
+}
+</style>
