@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('post_tags', function (Blueprint $table) {
             $table->id();
+
+            $table->bigInteger('post_id') 
+            ->foreign('post_id')
+            ->references('id')
+            ->on('posts');
+            
+            $table->bigInteger('tag_id') 
+            ->foreign('tag_id')
+            ->references('id')
+            ->on('tags');
+            
             $table->timestamps();
         });
     }

@@ -12,7 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->id();
+            $table->id(); 
+          
+            $table->bigInteger('user_id') 
+            ->foreign('user_id')
+            ->references('id')
+            ->on('users');
+            
+            $table->string('slug', 255)
+            ->unique(); 
+            $table->string('title', 255);  
+
+            $table->text('summary'); 
+            $table->text('post');
             $table->timestamps();
         });
     }
