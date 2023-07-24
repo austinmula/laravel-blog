@@ -1,10 +1,13 @@
 import './bootstrap';
 import '../css/app.css';
 
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
+// import { quillEditor, Quill } from 'vue3-quill'
+// import customQuillModule from 'customQuillModule'
+// Quill.register('modules/customQuillModule', customQuillModule)
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
