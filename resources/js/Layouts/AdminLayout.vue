@@ -90,13 +90,13 @@
                     </h1>
                     <div class="space-y-6 md:space-x-2 md:space-y-0"></div>
                 </div>
+                <slot />
 
                 <!-- Start Content -->
-                <div
+                <!-- <div
                     class="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4"
                 >
-                    <slot />
-                </div>
+                </div> -->
             </main>
         </div>
     </div>
