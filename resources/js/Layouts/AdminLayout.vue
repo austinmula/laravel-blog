@@ -1,7 +1,6 @@
 <!-- https://codepen.io/A_kamel/pen/wvzzGjG -->
 <template>
     <div class="flex h-screen overflow-y-hidden bg-white">
-        <SideBar />
         <div class="flex flex-col flex-1 h-full overflow-hidden">
             <!-- Navbar -->
             <header class="flex-shrink-0 border-b">
