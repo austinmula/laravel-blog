@@ -6,56 +6,9 @@
             <header class="flex-shrink-0 border-b">
                 <div class="flex items-center justify-between p-2">
                     <!-- Desktop search box -->
-                    <div
-                        class="items-center hidden px-2 space-x-2 md:flex-1 md:flex md:mr-auto md:ml-5"
-                    >
-                        <!-- search icon -->
-                        <span>
-                            <svg
-                                class="w-5 h-5 text-gray-500"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
-                            </svg>
-                        </span>
-                        <input
-                            type="text"
-                            placeholder="Search"
-                            class="px-4 py-3 rounded-md hover:bg-gray-100 lg:max-w-sm md:py-2 md:flex-1 focus:outline-none md:focus:bg-gray-100 md:focus:shadow md:focus:border"
-                        />
-                    </div>
 
                     <!-- Navbar right -->
                     <div class="relative flex items-center space-x-3">
-                        <!-- Search button -->
-                        <button
-                            @click="isSearchBoxOpen = true"
-                            class="p-2 bg-gray-100 rounded-full md:hidden focus:outline-none focus:ring hover:bg-gray-200"
-                        >
-                            <svg
-                                class="w-6 h-6 text-gray-500"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
-                            </svg>
-                        </button>
-
                         <div
                             class="items-center hidden space-x-3 md:flex"
                         ></div>
@@ -64,7 +17,7 @@
                         <div class="relative" x-data="{ isOpen: false }">
                             <button
                                 @click="isOpen = !isOpen"
-                                class="p-1 bg-gray-200 rounded-full focus:outline-none focus:ring"
+                                class="p-1 bg-purple-600 rounded-full focus:outline-none focus:ring"
                             >
                                 <img
                                     class="object-cover w-8 h-8 rounded-full"
@@ -80,16 +33,68 @@
             <main
                 class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll"
             >
+                <div class="py-3">
+                    <span> Dashboard </span>
+                    <span> > </span>
+                    <span> Blog </span>
+                    <span> > </span>
+                    <span> Create </span>
+                </div>
+
                 <!-- Main content header -->
                 <div
-                    class="flex flex-col items-start justify-between pb-6 space-y-4 lg:items-center lg:space-y-0 lg:flex-row"
+                    class="h-full pb-6 space-y-4 lg:items-center lg:space-y-0 lg:flex-row"
                 >
                     <h1 class="text-2xl font-semibold whitespace-nowrap">
-                        Dashboard
+                        Create New Blog
                     </h1>
-                    <div class="space-y-6 md:space-x-2 md:space-y-0"></div>
+
+                    <div class="flex justify-between items-center gap-3 py-3">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Aut expedita architecto dolor cupiditate porro
+                            earum nobis autem,
+                        </p>
+                        <PrimaryButton>Preview</PrimaryButton>
+                    </div>
+
+                    <form>
+                        <div class="flex flex-col gap-5 mb-5">
+                            <div class="form-control">
+                                <label
+                                    class="text-sm text-gray-700 font-semibold block mb-1"
+                                    >Blog Title</label
+                                >
+                                <input
+                                    type="text"
+                                    placeholder="enter blog title"
+                                    class="w-full border-gray-400 rounded-md"
+                                />
+                            </div>
+
+                            <div class="form-control">
+                                <label
+                                    class="text-sm text-gray-700 font-semibold block mb-1"
+                                    >Blog Slug</label
+                                >
+                                <input
+                                    type="text"
+                                    placeholder="enter blog slug"
+                                    readonly
+                                    value="some-simple-slug-for-a-blog"
+                                    class="w-full border-gray-400 rounded-md"
+                                />
+                            </div>
+
+                            <Vue3TagsInput
+                                :tags="tags"
+                                placeholder="input tags"
+                            />
+                        </div>
+                    </form>
+                    <slot />
+                    <!-- <div class="space-y-6 md:space-x-2 md:space-y-0"></div> -->
                 </div>
-                <slot />
 
                 <!-- Start Content -->
                 <!-- <div
@@ -102,15 +107,22 @@
 </template>
 
 <script>
-import SideBar from "@/Layouts/Partials/Sidebar.vue";
+// import SideBar from "@/Layouts/Partials/Sidebar.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import Vue3TagsInput from "vue3-tags-input";
 export default {
     components: {
-        SideBar,
+        // SideBar,
+        PrimaryButton,
+        TextInput,
+        Vue3TagsInput,
     },
 
     data() {
         return {
             isSearchBoxOpen: true,
+            tags: ["VUE", "HTML", "CSS"],
         };
     },
 };
