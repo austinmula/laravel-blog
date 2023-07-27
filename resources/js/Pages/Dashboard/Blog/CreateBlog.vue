@@ -16,6 +16,11 @@ export default {
 </script>
 
 <template>
+    <div>
+        <div class="card">
+            <Steps :model="items" :readonly="false" aria-label="Form Steps" />
+        </div>
+    </div>
     <div class="h-full pb-6 space-y-4 lg:items-center lg:space-y-0 lg:flex-row">
         <h1 class="text-2xl font-semibold whitespace-nowrap">
             Create New Blog
