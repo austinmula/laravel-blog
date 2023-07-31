@@ -4,6 +4,7 @@ import SelectTag from "@/Components/SelectTag.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import { router } from "@inertiajs/vue3";
 
 export default {
     layout: AdminLayout,
@@ -26,7 +27,7 @@ export default {
     },
     methods: {
         submitform() {
-            console.log(this.form);
+            router.post("/blog", this.form);
         },
     },
 };
