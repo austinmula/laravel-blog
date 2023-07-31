@@ -29,10 +29,15 @@ export default defineComponent({
         Vue3TagsInput,
     },
 
+    props: {
+        tags: Array,
+        tag: String,
+    },
+
     data() {
         return {
-            tags: [],
-            tag: "",
+            // tags: [],
+            // tag: "",
             selectItems: [{ text: "HTML" }, { text: "CSS" }, { text: "VUE" }],
         };
     },
