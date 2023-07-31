@@ -4,6 +4,7 @@ import SelectTag from "@/Components/SelectTag.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import { router } from "@inertiajs/vue3";
 
 export default {
     layout: AdminLayout,
@@ -12,15 +13,27 @@ export default {
         PrimaryButton,
         QuillEditor,
     },
+    data() {
+        return {
+            form: {
+                post: null,
+                title: null,
+                summary: null,
+                slug: null,
+                tags: [],
+                tag: null,
+            },
+        };
+    },
+    methods: {
+        submitform() {
+            router.post("/blog", this.form);
+        },
+    },
 };
 </script>
 
 <template>
-    <div>
-        <div class="card">
-            <Steps :model="items" :readonly="false" aria-label="Form Steps" />
-        </div>
-    </div>
     <div class="h-full pb-6 space-y-4 lg:items-center lg:space-y-0 lg:flex-row">
         <h1 class="text-2xl font-semibold whitespace-nowrap">
             Create New Blog
@@ -33,7 +46,7 @@ export default {
             </p>
             <PrimaryButton>Preview</PrimaryButton>
         </div>
-        <form>
+        <form @submit.prevent="submitform">
             <div
                 class="flex flex-col gap-5 mb-5 bg-slate-50 p-4 rounded-md shadow-md"
             >
@@ -46,6 +59,7 @@ export default {
                         >Blog Title</label
                     >
                     <input
+                        v-model="form.title"
                         type="text"
                         placeholder="enter blog title"
                         class="w-full border-gray-400 rounded-md"
@@ -58,10 +72,9 @@ export default {
                         >Blog Slug</label
                     >
                     <input
+                        v-model="form.slug"
                         type="text"
                         placeholder="enter blog slug"
-                        readonly
-                        value="some-simple-slug-for-a-blog"
                         class="w-full border-gray-400 rounded-md"
                     />
                 </div>
@@ -72,7 +85,7 @@ export default {
                         >Blog Tags</label
                     >
 
-                    <SelectTag />
+                    <SelectTag :tags="form.tags" :tag="form.tag" />
                 </div>
 
                 <div class="form-control">
@@ -82,6 +95,7 @@ export default {
                     >
 
                     <textarea
+                        v-model="form.summary"
                         name=""
                         id=""
                         cols="30"
@@ -93,7 +107,12 @@ export default {
             <h1 class="text-xl font-semibold whitespace-nowrap mb-5 mt-9">
                 Blog Content
             </h1>
-            <QuillEditor toolbar="full" />
+            <QuillEditor
+                content-type="html"
+                v-model:content="form.post"
+                toolbar="full"
+            />
+            <button type="submit">Submit</button>
         </form>
         <!-- <div class="space-y-6 md:space-x-2 md:space-y-0"></div> -->
     </div>

@@ -47,7 +47,15 @@ Route::middleware('auth')->group(function () {
 
 // Route::middleware('auth')->group(function () {
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.home');
-Route::get('/blog/create', [PostController::class, 'index'])->name('post.create');
+
+Route::group(['prefix' => 'blog', 'middleware' => 'auth'], function () {
+    Route::get('/create', [PostController::class, 'create'])->name('post.create');
+    Route::post('/', [PostController::class, 'store'])->name('post.store');
+});
+
+
+// Route::get('/blog/create', [PostController::class, 'index'])->name('post.create');
+// Route::post('/blog/create', [PostController::class, 'store'])->name('post.create');
 // });
 
 require __DIR__ . '/auth.php';
