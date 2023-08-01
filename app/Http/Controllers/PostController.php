@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,12 +12,50 @@ class PostController extends Controller
     //
     public function create()
     {
-        return Inertia::render('Dashboard/Blog/CreateBlog');
+
+        $tags = Tag::select('id', 'tag as text')->orderBy('text')->get();
+
+        return Inertia::render('Dashboard/Blog/CreateBlog', ['tags' => $tags]);
     }
 
     public function store(Request $request)
     {
-        dd($request);
+        // dd(auth()->user()->id);
+
+        $validated = $request->validate([
+            'title' => 'required|unique:posts,title|max:255',
+            'slug' => 'required|unique:posts,slug|max:255',
+            'tags' => 'required',
+            'post' => 'required',
+            'summary' => 'required',
+        ]);
+
+        $user = auth()->user()->id;
+
+        $post = Post::create(
+            [
+                'user_id' => $user,
+                'title' => $request->input('title'),
+                'slug' => $request->input('slug'),
+                'summary' => $request->input('summary'),
+                'post' => $request->input('post'),
+            ]
+        );
+
+        $tags = $request->input('tags');
+
+        foreach ($tags as $tag) {
+            $tagg = Tag::find($tag['id']);
+            $post->tags()->attach($tagg);
+            $post->save();
+        }
+
+        // $post->tags();
+
+
+
+
+        // dd($request);
     }
 
     //  index() => shows student list

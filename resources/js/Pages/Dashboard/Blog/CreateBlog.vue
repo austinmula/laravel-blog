@@ -13,11 +13,12 @@ export default {
         PrimaryButton,
         QuillEditor,
     },
+    props: ["tags"],
     data() {
         return {
             form: {
                 post: null,
-                title: null,
+                title: "",
                 summary: null,
                 slug: null,
                 tags: [],
@@ -25,9 +26,38 @@ export default {
             },
         };
     },
+    computed: {
+        slug: function () {
+            var slug = this.sanitizeTitle(this.form.title);
+            return slug;
+        },
+    },
     methods: {
         submitform() {
             router.post("/blog", this.form);
+        },
+        sanitizeTitle: function (title) {
+            var slug = "";
+            // Change to lower case
+            var titleLower = title?.toLowerCase();
+            // Letter "e"
+            slug = titleLower?.replace(/e|é|è|ẽ|ẻ|ẹ|ê|ế|ề|ễ|ể|ệ/gi, "e");
+            // Letter "a"
+            slug = slug?.replace(/a|á|à|ã|ả|ạ|ă|ắ|ằ|ẵ|ẳ|ặ|â|ấ|ầ|ẫ|ẩ|ậ/gi, "a");
+            // Letter "o"
+            slug = slug?.replace(/o|ó|ò|õ|ỏ|ọ|ô|ố|ồ|ỗ|ổ|ộ|ơ|ớ|ờ|ỡ|ở|ợ/gi, "o");
+            // Letter "u"
+            slug = slug?.replace(/u|ú|ù|ũ|ủ|ụ|ư|ứ|ừ|ữ|ử|ự/gi, "u");
+            // Letter "d"
+            slug = slug?.replace(/đ/gi, "d");
+            // Trim the last whitespace
+            slug = slug?.replace(/\s*$/g, "");
+            // Change whitespace to "-"
+            slug = slug?.replace(/\s+/g, "-");
+
+            this.form.slug = slug;
+
+            return slug;
         },
     },
 };
@@ -73,6 +103,7 @@ export default {
                     >
                     <input
                         v-model="form.slug"
+                        disabled
                         type="text"
                         placeholder="enter blog slug"
                         class="w-full border-gray-400 rounded-md"
@@ -85,7 +116,11 @@ export default {
                         >Blog Tags</label
                     >
 
-                    <SelectTag :tags="form.tags" :tag="form.tag" />
+                    <SelectTag
+                        :tags="form.tags"
+                        :tag="form.tag"
+                        :alltags="tags"
+                    />
                 </div>
 
                 <div class="form-control">
@@ -122,6 +157,7 @@ export default {
 .v3ti {
     padding-block: 5px;
 }
+
 .v3ti .v3ti-tag {
     background: #4a3a92;
 }

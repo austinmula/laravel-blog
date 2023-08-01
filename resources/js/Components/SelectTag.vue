@@ -3,7 +3,7 @@
         v-model:tags="tags"
         v-model="tag"
         :select="true"
-        :select-items="selectItems"
+        :select-items="alltags"
         @on-select="handleSelectedTag"
         @on-tags-changed="handleChangeTag"
         placeholder="Select the tag"
@@ -32,6 +32,7 @@ export default defineComponent({
     props: {
         tags: Array,
         tag: String,
+        alltags: Array,
     },
 
     data() {
