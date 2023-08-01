@@ -13,6 +13,7 @@ export default {
         PrimaryButton,
         QuillEditor,
     },
+    props: ["tags"],
     data() {
         return {
             form: {
@@ -85,7 +86,11 @@ export default {
                         >Blog Tags</label
                     >
 
-                    <SelectTag :tags="form.tags" :tag="form.tag" />
+                    <SelectTag
+                        :tags="form.tags"
+                        :tag="form.tag"
+                        :alltags="tags"
+                    />
                 </div>
 
                 <div class="form-control">
@@ -122,6 +127,7 @@ export default {
 .v3ti {
     padding-block: 5px;
 }
+
 .v3ti .v3ti-tag {
     background: #4a3a92;
 }

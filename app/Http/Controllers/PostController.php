@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,7 +11,10 @@ class PostController extends Controller
     //
     public function create()
     {
-        return Inertia::render('Dashboard/Blog/CreateBlog');
+
+        $tags = Tag::select('id', 'tag as text')->orderBy('text')->get();
+
+        return Inertia::render('Dashboard/Blog/CreateBlog', ['tags' => $tags]);
     }
 
     public function store(Request $request)
