@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class PostController extends Controller
 {
+    public function index()
+    {
+        $posts = auth()->user()->posts;
+
+        return Inertia::render('Dashboard/Blog/BlogIndex', ["posts" => $posts]);
+    }
     //
     public function create()
     {
@@ -53,7 +60,7 @@ class PostController extends Controller
         // $post->tags();
 
 
-
+        return Redirect::route('post.index');
 
         // dd($request);
     }
