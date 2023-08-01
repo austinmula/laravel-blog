@@ -43,35 +43,20 @@
 
                 <!-- Main content header -->
                 <slot />
-
-                <!-- Start Content -->
-                <!-- <div
-                    class="grid grid-cols-1 gap-5 mt-6 sm:grid-cols-2 lg:grid-cols-4"
-                >
-                </div> -->
             </main>
         </div>
     </div>
 </template>
 
 <script>
-// import SideBar from "@/Layouts/Partials/Sidebar.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import Vue3TagsInput from "vue3-tags-input";
 export default {
     components: {
-        // SideBar,
         PrimaryButton,
         TextInput,
         Vue3TagsInput,
-    },
-
-    data() {
-        return {
-            isSearchBoxOpen: true,
-            tags: ["VUE", "HTML", "CSS"],
-        };
     },
 };
 </script>
