@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
 // Route::middleware('auth')->group(function () {
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.home');
 
-Route::group(['prefix' => 'blog', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'dashboard/blog', 'middleware' => 'auth'], function () {
     Route::get('/create', [PostController::class, 'create'])->name('post.create');
     Route::get('/', [PostController::class, 'index'])->name('post.index');
     Route::post('/', [PostController::class, 'store'])->name('post.store');

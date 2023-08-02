@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
+import Card from "primevue/card";
 
 defineProps({
     canLogin: {
@@ -11,14 +12,6 @@ defineProps({
     posts: {
         type: Array,
     },
-    // laravelVersion: {
-    //     type: String,
-    //     required: true,
-    // },
-    // phpVersion: {
-    //     type: String,
-    //     required: true,
-    // },
 });
 </script>
 
@@ -53,6 +46,23 @@ defineProps({
                     >Register</Link
                 >
             </template>
+        </div>
+        <div class="p-6">
+            <div class="card flex gap-5 flex-col">
+                <Card v-for="post in posts" :key="post.id">
+                    <template #title>
+                        <h2 class="text-3xl text-black font-thin">
+                            {{ post.title }}
+                        </h2>
+                        <small class="text-xs font-thin">Some Username</small>
+                    </template>
+                    <template #content>
+                        <p>
+                            {{ post.summary }}
+                        </p>
+                    </template>
+                </Card>
+            </div>
         </div>
     </div>
 </template>
