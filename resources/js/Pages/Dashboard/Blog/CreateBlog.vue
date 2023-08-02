@@ -5,6 +5,12 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { router } from "@inertiajs/vue3";
+import InputText from "primevue/inputtext";
+import Textarea from "primevue/textarea";
+import MultiSelect from "primevue/multiselect";
+//local registration
+import { FormWizard, TabContent } from "vue3-form-wizard";
+import "vue3-form-wizard/dist/style.css";
 
 export default {
     layout: AdminLayout,
@@ -12,15 +18,23 @@ export default {
         SelectTag,
         PrimaryButton,
         QuillEditor,
+        FormWizard,
+        TabContent,
+        InputText,
+        Textarea,
+        MultiSelect,
     },
-    props: ["tags"],
+    props: {
+        tags: Array,
+        errors: Object,
+    },
     data() {
         return {
             form: {
                 post: null,
                 title: "",
                 summary: null,
-                slug: null,
+                slug: "",
                 tags: [],
                 tag: null,
             },
@@ -64,92 +78,96 @@ export default {
 </script>
 
 <template>
-    <div class="h-full pb-6 space-y-4 lg:items-center lg:space-y-0 lg:flex-row">
-        <h1 class="text-2xl font-semibold whitespace-nowrap">
-            Create New Blog
+    <div
+        class="h-full pb-6 space-y-4 lg:items-center lg:space-y-0 lg:flex-row w-full md:w-3/5"
+    >
+        <h1 class="text-2xl font-semibold whitespace-nowrap pb-6">
+            Create new blog article
         </h1>
+        <form-wizard step-size="xs" @on-complete="submitform" color="#282c2e">
+            <tab-content title="Blog Details">
+                <div class="flex flex-col gap-5 mb-5 p-4 shadow-md">
+                    <h1 class="text-xl font-semibold whitespace-nowrap">
+                        Blog Details
+                    </h1>
+                    <div class="form-control">
+                        <label
+                            class="text-sm text-gray-700 font-semibold block mb-1"
+                            >Blog Title</label
+                        >
+                        <input-text
+                            v-model="form.title"
+                            placeholder="enter blog title"
+                            class="w-full"
+                            :class="{
+                                'p-invalid': errors.title,
+                            }"
+                        />
+                    </div>
 
-        <div class="flex justify-between items-center gap-3 py-3">
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-                expedita architecto dolor cupiditate porro earum nobis autem,
-            </p>
-            <PrimaryButton>Preview</PrimaryButton>
-        </div>
-        <form @submit.prevent="submitform">
-            <div
-                class="flex flex-col gap-5 mb-5 bg-slate-50 p-4 rounded-md shadow-md"
-            >
-                <h1 class="text-xl font-semibold whitespace-nowrap">
-                    Blog Details
-                </h1>
-                <div class="form-control">
-                    <label
-                        class="text-sm text-gray-700 font-semibold block mb-1"
-                        >Blog Title</label
-                    >
-                    <input
-                        v-model="form.title"
-                        type="text"
-                        placeholder="enter blog title"
-                        class="w-full border-gray-400 rounded-md"
-                    />
+                    <div class="form-control hidden">
+                        <label
+                            class="text-sm text-gray-700 font-semibold block mb-1"
+                            >Blog Slug</label
+                        >
+                        <input-text
+                            v-model="form.slug"
+                            disabled
+                            placeholder="enter blog slug"
+                            class="w-full"
+                            :class="{
+                                'p-invalid': errors.slug,
+                            }"
+                        />
+                    </div>
+
+                    <div class="form-control">
+                        <label
+                            class="text-sm text-gray-700 font-semibold block mb-1"
+                            >Blog Tags</label
+                        >
+
+                        <!-- <SelectTag
+                            :tags="form.tags"
+                            :tag="form.tag"
+                            :alltags="tags"
+                        /> -->
+                        <multi-select
+                            v-model="form.tags"
+                            display="chip"
+                            filter
+                            :options="tags"
+                            optionLabel="tag"
+                            placeholder="Select Tags"
+                            :maxSelectedLabels="4"
+                            class="w-full md:w-20rem"
+                        />
+                    </div>
+
+                    <div class="form-control">
+                        <label
+                            class="text-sm text-gray-700 font-semibold block mb-1"
+                            >Blog Summary</label
+                        >
+
+                        <textarea
+                            v-model="form.summary"
+                            cols="20"
+                            rows="10"
+                            class="w-full resize-none"
+                        ></textarea>
+                    </div>
                 </div>
-
-                <div class="form-control">
-                    <label
-                        class="text-sm text-gray-700 font-semibold block mb-1"
-                        >Blog Slug</label
-                    >
-                    <input
-                        v-model="form.slug"
-                        disabled
-                        type="text"
-                        placeholder="enter blog slug"
-                        class="w-full border-gray-400 rounded-md"
-                    />
-                </div>
-
-                <div class="form-control">
-                    <label
-                        class="text-sm text-gray-700 font-semibold block mb-1"
-                        >Blog Tags</label
-                    >
-
-                    <SelectTag
-                        :tags="form.tags"
-                        :tag="form.tag"
-                        :alltags="tags"
-                    />
-                </div>
-
-                <div class="form-control">
-                    <label
-                        class="text-sm text-gray-700 font-semibold block mb-1"
-                        >Blog Summary</label
-                    >
-
-                    <textarea
-                        v-model="form.summary"
-                        name=""
-                        id=""
-                        cols="30"
-                        rows="10"
-                        class="w-full border-gray-400 rounded-md resize-none"
-                    ></textarea>
-                </div>
-            </div>
-            <h1 class="text-xl font-semibold whitespace-nowrap mb-5 mt-9">
-                Blog Content
-            </h1>
-            <QuillEditor
-                content-type="html"
-                v-model:content="form.post"
-                toolbar="full"
-            />
-            <button type="submit">Submit</button>
-        </form>
-        <!-- <div class="space-y-6 md:space-x-2 md:space-y-0"></div> -->
+            </tab-content>
+            <tab-content title="Blog Content">
+                <QuillEditor
+                    content-type="html"
+                    v-model:content="form.post"
+                    toolbar="full"
+                />
+                <!-- <button type="submit">Submit</button> -->
+            </tab-content>
+        </form-wizard>
     </div>
 </template>
 
