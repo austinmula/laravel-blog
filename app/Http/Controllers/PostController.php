@@ -20,7 +20,8 @@ class PostController extends Controller
     public function create()
     {
 
-        $tags = Tag::select('id', 'tag as text')->orderBy('text')->get();
+        // $tags = Tag::select('id', 'tag as name')->orderBy('tag')->get();
+        $tags = Tag::orderBy('tag')->get();
 
         return Inertia::render('Dashboard/Blog/CreateBlog', ['tags' => $tags]);
     }
