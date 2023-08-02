@@ -33,14 +33,6 @@
             <main
                 class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll"
             >
-                <div class="py-3">
-                    <span> Dashboard </span>
-                    <span> > </span>
-                    <span> Blog </span>
-                    <span> > </span>
-                    <span> Create </span>
-                </div>
-
                 <!-- Main content header -->
                 <slot />
             </main>
