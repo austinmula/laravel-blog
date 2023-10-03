@@ -2,28 +2,48 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use A17\Twill\Models\Behaviors\HasBlocks;
+use A17\Twill\Models\Behaviors\HasTranslation;
+use A17\Twill\Models\Behaviors\HasSlug;
+use A17\Twill\Models\Behaviors\HasMedias;
+use A17\Twill\Models\Behaviors\HasRevisions;
+use A17\Twill\Models\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasBlocks, HasTranslation, HasSlug, HasMedias, HasRevisions;
+
     protected $fillable = [
-        'user_id', 'title', 'slug', 'title', 'summary', 'post'
+        'published',
+        'title',
+        'description',
     ];
 
-    public function users()
-    {
-        return $this->belongsTo(User::class);
-    }
+    public $translatedAttributes = [
+        'title',
+        'description',
+        'active',
+    ];
 
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
+    public $slugAttributes = [
+        'title',
+    ];
 
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class, 'post_tags');
-    }
+    public $mediasParams = [
+        'cover' => [
+            'default' => [
+                [
+                    'name' => 'default',
+                    'ratio' => 16 / 9,
+                ],
+            ],
+            'mobile' => [
+                [
+                    'name' => 'landscape',
+                    'ratio' => 16 / 9,
+                ],
+            ],
+        ],
+    ];
+
 }
