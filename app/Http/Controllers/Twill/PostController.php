@@ -17,6 +17,8 @@ class PostController extends BaseModuleController
      */
     protected function setUpController(): void
     {
+        $this->setPermalinkBase('');
+        $this->withoutLanguageInPermalink();
     }
 
     /**
