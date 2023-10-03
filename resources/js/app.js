@@ -1,23 +1,33 @@
-import './bootstrap';
-import '../css/app.css';
+import './bootstrap'
+import '../css/app.css'
 
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
+import PrimeVue from 'primevue/config'
+import 'primevue/resources/themes/soho-light/theme.css'
+import ToastService from 'primevue/toastservice'
+// import 'primevue/resources/themes/fluent-light/theme.css'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-    setup({ el, App, props, plugin }) {
+    title: title => `${title} - ${appName}`,
+    resolve: name =>
+        resolvePageComponent(
+            `./Pages/${name}.vue`,
+            import.meta.glob('./Pages/**/*.vue')
+        ),
+    setup ({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(PrimeVue)
+            .use(ToastService)
             .use(ZiggyVue, Ziggy)
-            .mount(el);
+            .mount(el)
     },
     progress: {
-        color: '#4B5563',
-    },
-});
+        color: '#4B5563'
+    }
+})
